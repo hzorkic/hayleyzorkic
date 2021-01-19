@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Hayley Zorkic" />
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon.ico">
+    <title>Two Programming Languages Walk Into A Bar ...</title>
+    <meta name="generator" content="Hugo 0.79.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,400,200bold,400old" />
+    
+    <!--[if lt IE 9]>
+			<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+
+    
+  </head>
+
+  <body>
+    <div id="wrap">
+      
+      <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="fa fa-home"></i></a>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+        <li><a href="/post/">BLOG</a></li>
+        
+        <li><a href="/projects/">PROJECTS</a></li>
+        
+        <li><a href="/resume/">RESUME</a></li>
+        
+      
+      </ul>
+    </div>
+  </div>
+</nav>
+
+      <div class="container">
+        <div class="blog-post">
+          <h3>
+            <strong><a href="/post/2020/12/10/two-programming-languages-walk-into-a-bar/">Two Programming Languages Walk Into A Bar ...</a></strong>
+          </h3>
+        </div>
+ 
+<div class="blog-title">
+          <h4>
+         December 10, 2020 
+            &nbsp;&nbsp;
+            
+          </h4>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <div class="blogpost">
+              
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="two-programming-lanugages-walk-into-a-bar" class="section level1">
+<h1>Two Programming Lanugages Walk Into A Bar</h1>
+<p><img src="/post/2020-12-10-two-programming-languages-walk-into-a-bar_files/two-cocktails.jpg" /></p>
+<div id="introduction" class="section level2">
+<h2>0. Introduction</h2>
+<p>Two programming languages walk into The Computation, a new bar in town. Python, a smooth, popular language struts in and nods to the scholars and professionals. They swoon over discussions about everything from machine learning to web development. With a slight delay, R nonchalantly walks in over to its usual spot- next to the Academics and statisticians- surrounded by premade pacakges and libraries.</p>
+<p>Python and R walk up to the bartender at the same time while the other bar go-ers gasp and fall silent. The bartender sweats- how could he serve both Python and R at the same time?</p>
+<p>“I got it,” croakes Reticulate, “both of ’em.”</p>
+<p>Reticulate is an R package that allows for the simmotaneous usage of R and Python. In this post, I will teach you how to install reticulate, use it to interpolate between the two languages, and also explore string searching with Regular Expressions in R and Python /together./</p>
+</div>
+<div id="downloading-reticulate" class="section level2">
+<h2>1. Downloading Reticulate</h2>
+<p>First we want to install the reticulate package and load it in. Reticulate will use the version of python found on your PATH. If you would like to change it, you can use the use_python() function below.</p>
+<pre class="r"><code>#install.packages(&quot;reticulate&quot;)
+library(reticulate)</code></pre>
+</div>
+<div id="how-to-switch-between-python-and-r" class="section level2">
+<h2>2. How to switch between Python and R</h2>
+<p>Now that we have reticulate installed and loaded, we can run python chunks in R Markdown files by simply replaceing {R} with {python}.</p>
+<p>Let’s first utilize an R chuck to load in and wrangle a list of recipes of the cocktails offered at The Computation Bar:</p>
+<pre class="r"><code>library(ggplot2)
+library(stringr)
+library(readr)
+library(dplyr)
+
+cocktails &lt;- read.csv(&quot;cocktails.csv&quot;)
+cocktails &lt;- data.frame(cocktails) %&gt;% select(-c(1,3,4,5,7,8,9,19,20:35)) 
+head(cocktails) </code></pre>
+<pre><code>##                              strDrink          strCategory strIngredient1
+## 1 57 Chevy with a White License Plate             Cocktail Creme de Cacao
+## 2                      1-900-FUK-MEUP                 Shot Absolut Kurant
+## 3                    110 in the shade                 Beer          Lager
+## 4              151 Florida Bushwacker Milk / Float / Shake     Malibu rum
+## 5                         155 Belmont             Cocktail       Dark rum
+## 6                       24k nightmare                 Shot   Goldschlager
+##   strIngredient2             strIngredient3       strIngredient4 strIngredient5
+## 1          Vodka                                                               
+## 2  Grand Marnier Chambord raspberry liqueur Midori melon liqueur     Malibu rum
+## 3        Tequila                                                               
+## 4      Light rum              151 proof rum  Dark Creme de Cacao      Cointreau
+## 5      Light rum                      Vodka         Orange juice               
+## 6  JÃ¤germeister               Rumple Minze        151 proof rum               
+##   strIngredient6  strIngredient7    strIngredient8 strIngredient9
+## 1                                                                
+## 2       Amaretto Cranberry juice   Pineapple juice               
+## 3                                                                
+## 4           Milk Coconut liqueur Vanilla ice-cream               
+## 5                                                                
+## 6</code></pre>
+<p>Nice! We have a dataset with a list of drinks, their category, and a list of required ingredients!R and Python are in the mood for a Rum based drink, but there are several types of Rum. We can use a python chunk and import the python regular expressions library to help us make a new dataset with only Rum based drinks.</p>
+<pre class="python"><code>import re
+import pandas as pd
+
+cocktails = r.cocktails
+
+cocktails[&#39;Ingredients&#39;] = cocktails[[&#39;strIngredient1&#39;, &#39;strIngredient2&#39;,&#39;strIngredient3&#39;, &#39;strIngredient4&#39;, &#39;strIngredient5&#39;, &#39;strIngredient6&#39;, &#39;strIngredient7&#39;, &#39;strIngredient8&#39;, &#39;strIngredient9&#39;]].apply(lambda x: &#39;, &#39;.join(x[x.notnull()]), axis = 1)
+
+df = cocktails[[&#39;strDrink&#39;,&#39;strCategory&#39;,&#39;Ingredients&#39;]]
+
+#filter drinks with Rum in them
+df = df[df[&#39;Ingredients&#39;].str.contains(&quot;rum&quot;)]
+
+print(&quot;There are&quot;,len(df),&quot;drinks with Rum in them.&quot;,&#39;\n&#39;)
+
+#randomly select two drinks for Python and Rum</code></pre>
+<pre><code>## There are 81 drinks with Rum in them.</code></pre>
+<pre class="python"><code>x = df.sample(n=1,replace=True)
+y = df.sample(n=1,replace=True)
+print(&quot;Python can order menu item &quot;,x[&#39;strDrink&#39;],&#39;\n&#39;)</code></pre>
+<pre><code>## Python can order menu item  443    Rum Sour
+## Name: strDrink, dtype: object</code></pre>
+<pre class="python"><code>print(&quot;R can order menu item &quot;,y[&#39;strDrink&#39;],&#39;\n&#39;)</code></pre>
+<pre><code>## R can order menu item  287    Happy Skipper
+## Name: strDrink, dtype: object</code></pre>
+</div>
+</div>
+
+            
+        <hr>         <div class="related-posts">
+                <h5>Related Posts</h5>
+                
+              </div> 
+            </div>
+          </div>
+
+   <hr>  <div class="disqus">
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+
+    (function() {
+      
+      
+      if (window.location.hostname == "localhost")
+        return;
+
+      var disqus_shortname = '';
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div> 
+        </div>
+      </div>
+    </div>
+
+    
+    <footer>
+  <div id="footer">
+    <div class="container">
+      <p class="text-muted">&copy; All rights reserved. Powered by <a href="https://gohugo.io/">Hugo</a> and
+      <a href="http://www.github.com/nurlansu/hugo-sustain/">sustain</a> with ♥</p>
+    </div>
+  </div>
+</footer>
+<div class="footer"></div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="/js/docs.min.js"></script>
+<script src="/js/main.js"></script>
+
+<script src="/js/ie10-viewport-bug-workaround.js"></script>
+
+
+    
+  </body>
+</html>
